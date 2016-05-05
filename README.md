@@ -16,7 +16,7 @@ Installs the following additional packages and libraries.
 The gclient file is included at   
 ``` /opt/scripts/gclient.webrtc ```
 
-A script for synching Chromium repo will be setup at
+A script for synching Chromium repo will be setup at   
 ``` /opt/scripts/sync-chromium.sh ```
 
 Please note that initial gclient sync of Chromium repo may take >30 minutes depending on network connection.
