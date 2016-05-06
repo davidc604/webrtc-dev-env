@@ -13,11 +13,11 @@ Installs the following additional packages and libraries.
 * MESA dev packages
 * Debugging symbols for runtime libs
 
-The gclient file is included at   
-``` /opt/scripts/gclient.webrtc ```
+A script for fetching the WebRTC repo will be at   
+``` $HOME/scripts/fetch-webrtc.sh ```
 
-A script for synching Chromium repo will be setup at   
-``` /opt/scripts/sync-chromium.sh ```
+An additional script for synching Chromium repo will be setup at   
+``` $HOME/scripts/sync-chromium.sh ```
 
 Please note that initial gclient sync of Chromium repo may take >30 minutes depending on network connection.
 
