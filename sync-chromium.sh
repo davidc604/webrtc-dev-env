@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# sync_chromium.sh
+# sync-chromium.sh
 #
 # Setup Chromium folder at /chromium/src
 #
@@ -8,11 +8,11 @@
 # All rights reserved. 2016.
 
 # Create Chromium folder
-mkdir -p /chromium
+mkdir -p /home/root/chromium
 
 # copy gclient file
-cp ./gclient.webrtc /chromium/.gclient
+cp ./gclient.webrtc /home/root/chromium/.gclient
 
 # Sync Chromium
-pushd /chromium
+pushd /home/root/chromium
 gclient sync

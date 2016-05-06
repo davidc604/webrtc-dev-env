@@ -27,11 +27,6 @@ RUN dpkg --add-architecture i386 && apt-get update
 
 RUN aptitude install -y g++-arm-linux-gnueabihf
 
-# clone Chromium depot_tools
-RUN cd /usr/local/sbin && git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git .
-
-ENV HOME /root
-
 # Install Chromium dev packages.
 RUN apt-get update && apt-get install -y apache2.2-bin bison cdbs curl \
   dpkg-dev elfutils devscripts fakeroot \
@@ -108,6 +103,22 @@ RUN apt-get install -y ca-certificates-java desktop-file-utils dosfstools \
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
 # Add script for sync Chromium repo
-ADD gclient.webrtc /opt/scripts/gclient.webrtc
-ADD sync-chromium.sh /opt/scripts/sync-chromium.sh
+ADD gclient.webrtc /home/root/scripts/gclient.webrtc
+ADD sync-chromium.sh /home/root/scripts/sync-chromium.sh
+ADD fetch-webrtc.sh /home/root/scripts/fetch-webrtc.sh
 
+# Add user docker. Change to the user you want if needed.
+# RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+# USER docker
+
+ENV HOME /home/root
+WORKDIR /home/root
+
+# clone Chromium depot_tools
+RUN mkdir -p /home/root/depot_tools
+RUN cd /home/root/depot_tools && git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git .
+ENV DEPOT_TOOLS /home/root/depot_tools
+ENV PATH $PATH:$DEPOT_TOOLS
+
+# Run bash.
+CMD /bin/bash
