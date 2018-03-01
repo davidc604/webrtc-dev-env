@@ -1,11 +1,11 @@
 # webrtc-dev-env
 Dockerfile for WebRTC development environment.
 
-From Ubuntu 14.04 LTS.
+From Ubuntu 16.04 LTS.
 
 Installs the following additional packages and libraries.
 
-* OpenJDK & OpenJRE 7
+* OpenJDK & OpenJRE 8
 * Chromium dev packages
 * Chromium required runtime libs
 * Packages for NaCl (Native Client) builds and toolchains
