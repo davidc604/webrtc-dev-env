@@ -94,6 +94,9 @@ RUN apt-get install -y ca-certificates-java desktop-file-utils dosfstools \
   libsecret-1-0 libsecret-common libtdb1 libudisks2-0 libvorbisfile3 ntfs-3g \
   parted policykit-1-gnome sound-theme-freedesktop udisks2
 
+# a bit of utilities
+RUN apt-get install -y tmux vim
+
 # Export JAVA_HOME variable
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
@@ -101,6 +104,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ADD gclient.webrtc /home/root/scripts/gclient.webrtc
 ADD sync-chromium.sh /home/root/scripts/sync-chromium.sh
 ADD fetch-webrtc.sh /home/root/scripts/fetch-webrtc.sh
+ADD build-webrtc-unity.sh /home/root/scripts/build-webrtc-unity.sh
 
 # Add user docker. Change to the user you want if needed.
 # RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
@@ -111,7 +115,7 @@ WORKDIR /home/root
 
 # clone Chromium depot_tools
 RUN mkdir -p /home/root/depot_tools
-RUN cd /home/root/depot_tools && git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git .
+RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 ENV DEPOT_TOOLS /home/root/depot_tools
 ENV PATH $PATH:$DEPOT_TOOLS
 

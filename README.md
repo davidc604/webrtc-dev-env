@@ -19,6 +19,9 @@ A script for fetching the WebRTC repo will be at
 An additional script for synching Chromium repo will be setup at   
 ``` $HOME/scripts/sync-chromium.sh ```
 
+A script for building WebRTC Unity plugin example
+``` ./scripts/fetch-webrtc.sh ```
+
 Please note that initial gclient sync of Chromium repo may take >30 minutes depending on network connection.
 
 Due to the issue with docker [#16429](https://github.com/docker/docker/issues/16429), if need to mount any folders, probably need to run with command   
