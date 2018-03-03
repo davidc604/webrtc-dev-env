@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: mhamanaka/webrtc-dev-env-java8:latest
+    steps:
+      - run:
+          name: Avoid ssh hosts unknown for github.com
+          command: |
+            mkdir -p /root/.ssh/
+            echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
+            chmod 600 /root/.ssh/config
+      - checkout
+      - run: |
+          df -BM
+          echo "PATH: ${PATH}"
+
+      - run:
+          name: Build Webrtc Unity Plugin
+          command: |
+            bash ./build-webrtc-unity.sh
+
+      - run: |
+          mkdir artifacts
+          cp webrtc/libjingle_peerconnection_so.so artifacts/.
+          cp webrtc/libwebrtc_unity.jar artifacts/.
+
+      - store_artifacts:
+          path: artifacts
+
+      - run:
+          name: release to github
+          command: |
+            zip libwebrtc_unity.zip artifacts/*
+            apt-get install -y golang-1.9
+            export PATH=/usr/lib/go-1.9/bin:${PATH}
+            mkdir go-ws
+            export GOPATH=`pwd`/go-ws
+            go get github.com/aktau/github-release
+            export RELEASE=go-ws/bin/github-release
+            export TAG=`date --utc '+%Y%m%d_%H%M%S'`
+            ${RELEASE} -v -q release -u mhama -r webrtc-dev-env --tag ${TAG} --pre-release
+            ${RELEASE} -v upload -u mhama -r webrtc-dev-env --tag ${TAG} --name libwebrtc_unity.zip --file ./libwebrtc_unity.zip -R

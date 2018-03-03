@@ -11,7 +11,20 @@ else
   git pull
   cd ..
 fi
-export PATH=$PATH:`pwd`/depot_tools
+
+BASE_PATH=`pwd`
+export PATH=$PATH:${BASE_PATH}/depot_tools
+
+# fix for problem of `tar` command on some docker platform "Cannot change ownership"
+# happens on sysroot installation `src/build/linux/sysroot_scripts/install-sysroot.py` while `gclient sync`
+TAR_PROXY_DIR="${BASE_PATH}/tar-bin"
+if [ ! -d ${TAR_PROXY_DIR} ]; then
+  mkdir ${TAR_PROXY_DIR}
+fi
+echo '#!/bin/sh -x' > ${TAR_PROXY_DIR}/tar
+echo '/bin/tar $1 $2 $3 $4 $5 $6 $7 $8 $9 --no-same-owner' >> ${TAR_PROXY_DIR}/tar
+chmod 755 ${TAR_PROXY_DIR}/tar
+export PATH=${TAR_PROXY_DIR}:$PATH
 
 # fetch BIG source code
 mkdir webrtc
