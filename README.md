@@ -20,7 +20,7 @@ An additional script for synching Chromium repo will be setup at
 ``` $HOME/scripts/sync-chromium.sh ```
 
 A script for building WebRTC Unity plugin example
-``` ./scripts/fetch-webrtc.sh ```
+``` ./scripts/build-webrtc-unity.sh ```
 
 Please note that initial gclient sync of Chromium repo may take >30 minutes depending on network connection.
 
