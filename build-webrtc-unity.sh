@@ -35,7 +35,7 @@ fetch --nohooks webrtc
 
 # get source code of specific commit
 cd src
-git checkout 51e2046db
+git checkout 2770c3df91861693ecb2ae805db84c7edbb1fc1a # applied unity plugin fix
 cd ..
 
 # prepare dependent libraries
